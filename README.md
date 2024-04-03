@@ -1,14 +1,48 @@
-<a href="https://zerodha.tech"><img src="https://zerodha.tech/static/images/github-badge.svg" align="right" /></a>
-
 smtppool
 ========
 
 smtppool is a Go library that creates a pool of reusable SMTP connections for high throughput e-mailing. It gracefully handles idle connections, timeouts, and retries. The e-mail formatting, parsing, and preparation code is forked from [jordan-wright/email](https://github.com/jordan-wright/email).
 
 
-### Install
-```go get github.com/knadh/smtppool```
+### Updates made to this fork
+- adds support for email templates. See example below on how to use and generate HTML using templates
 
+### Install
+```go get github.com/suhailgupta03/smtppool```
+
+### Generating HTML (SKIP IF NOT REQUIRED)
+```go
+package main
+
+import (
+	"github.com/suhailgupta03/smtppool"
+	"log"
+)
+
+type TestEmail struct {
+	TemplateName string
+	TemplateType string
+	Name         string
+}
+
+func main() {
+	emailSubject := "Welcome, {{ .Name }}"
+	tpl, err := smtppool.InitEmailTpl(emailSubject, "sample-template.tpl")
+	if err != nil {
+		log.Fatal("Failed to init template", err)
+	}
+
+	html, _ := smtppool.GetHTML(tpl, TestEmail{
+		TemplateName: "Test Template",
+		TemplateType: "Test",
+		Name:         "FooBar",
+	})
+
+	log.Println(html.Body)
+	log.Println(html.Subject)
+}
+
+```
 
 #### Usage
 ```go
@@ -18,7 +52,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/knadh/smtppool"
+	"github.com/suhailgupta03/smtppool"
 )
 
 func main() {
