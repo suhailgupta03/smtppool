@@ -3,9 +3,9 @@ smtppool
 
 smtppool is a Go library that creates a pool of reusable SMTP connections for high throughput e-mailing. It gracefully handles idle connections, timeouts, and retries. The e-mail formatting, parsing, and preparation code is forked from [jordan-wright/email](https://github.com/jordan-wright/email).
 
+> ### Updates Made To This Fork
+> - adds support for email templates. See example below on how to use and generate HTML using templates
 
-### Updates made to this fork
-- adds support for email templates. See example below on how to use and generate HTML using templates
 
 ### Install
 ```go get github.com/suhailgupta03/smtppool```
